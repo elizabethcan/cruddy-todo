@@ -18,6 +18,17 @@ exports.create = (text, callback) => {
 };
 
 exports.readAll = (callback) => {
+  var result = [];
+  fs.readdir(exports.dataDir, (err, todoList)=>{
+    for (var i = 0; i < todoList.length; i++) {
+      var filename = path.parse(todoList[i]).name;
+      var item = {};
+      item['id'] = filename;
+      item['text'] = filename;
+      result.push(item);
+    }
+    callback(null, result);
+  });
   // var data = _.map(items, (text, id) => {
   //   return { id, text };
   // });
