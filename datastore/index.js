@@ -8,17 +8,9 @@ var items = {};
 // Public API - Fix these CRUD functions ///////////////////////////////////////
 
 exports.create = (text, callback) => {
-  // var id = counter.getNextUniqueId();
-  // items[id] = text;
-  // callback(null, { id, text });
-
-  //invoke getNextUniqueId with some callback
   counter.getNextUniqueId((err, id) => {
-    //fs.writeFile takes filepath (/data + Id) and fileContent (text) and a callback to throw err
-    //Put it in testData?
-    var filepath = './test/testData/' + id + '.txt';
+    var filepath = exports.dataDir + '/' + id + '.txt';
     fs.writeFile(filepath, text, () => {
-      // callback(err, data);
       callback(null, { id, text });
     });
   });
@@ -26,10 +18,14 @@ exports.create = (text, callback) => {
 };
 
 exports.readAll = (callback) => {
-  var data = _.map(items, (text, id) => {
-    return { id, text };
-  });
-  callback(null, data);
+  // var data = _.map(items, (text, id) => {
+  //   return { id, text };
+  // });
+  // callback(null, data);
+  
+  // call fs readdir with the directory path and a callback which takes in err and todoList
+  // map through each item in the array and set each value in an object with id as key and value
+  //callback(null, data)
 };
 
 exports.readOne = (id, callback) => {
