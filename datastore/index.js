@@ -19,7 +19,7 @@ exports.create = (text, callback) => {
 
 exports.readAll = (callback) => {
   var result = [];
-  fs.readdir(exports.dataDir, (err, todoList)=>{
+  fs.readdir(exports.dataDir, (err, todoList) => {
     for (var i = 0; i < todoList.length; i++) {
       var filename = path.parse(todoList[i]).name;
       var item = {};
@@ -29,23 +29,18 @@ exports.readAll = (callback) => {
     }
     callback(null, result);
   });
-  // var data = _.map(items, (text, id) => {
-  //   return { id, text };
-  // });
-  // callback(null, data);
-  
-  // call fs readdir with the directory path and a callback which takes in err and todoList
-  // map through each item in the array and set each value in an object with id as key and value
-  //callback(null, data)
 };
 
 exports.readOne = (id, callback) => {
-  var text = items[id];
-  if (!text) {
-    callback(new Error(`No item with id: ${id}`));
-  } else {
-    callback(null, { id, text });
-  }
+  var filepath = exports.dataDir + '/' + id + '.txt';
+  fs.readFile(filepath, (err, fileData) => {
+    if (err) {
+      callback(err, 0);
+    } else {
+      var text = fileData.toString();
+      callback(null, { id, text });
+    }
+  });
 };
 
 exports.update = (id, text, callback) => {
